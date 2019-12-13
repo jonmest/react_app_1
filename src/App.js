@@ -8,6 +8,7 @@ import Search from './components/users/Search';
 import axios from 'axios';
 import About from './components/pages/About';
 import User from './components/users/User';
+import GithubState from './context/github/GithubState';
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -17,15 +18,7 @@ const App = () => {
   const [alert, setAlert] = useState(null);
 
 
-  const searchUsers = async text => {
-    setLoading(true);
-    const requestURL = `https://api.github.com/search/users?q=${text}&client_id=${
-      process.env.REACT_APP_GITHUB_CLIENT_ID
-    }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`;
-    const res = await axios.get(requestURL);
-    setUsers(res.data.items);
-    setLoading(false);
-  }
+
 
   const getUser = async (username) => {
     setLoading(true);
@@ -61,6 +54,7 @@ const App = () => {
   }
 
     return (
+      <GithubState>
       <Router>
       <div className="App">
         <Navbar></Navbar>
@@ -72,12 +66,12 @@ const App = () => {
           <Route exact path='/' render={props => (
             <Fragment>
 
-<Search searchUsers={searchUsers}
+<Search
         clearUsers={clearUsers}
         showClear={users.length > 0 ? true : false}
         setAlert={showAlert}
         ></Search>
-        <Users loading={loading} users={users}></Users>
+        <Users></Users>
 
 
             </Fragment>
@@ -105,6 +99,7 @@ const App = () => {
         </div>
       </div>
       </Router>
+      </GithubState>
     );
 
 

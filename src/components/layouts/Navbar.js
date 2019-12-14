@@ -5,20 +5,40 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({icon, title}) => {
         return (
-            <nav className='navbar bg-primary'>
-                <h1>
-                    <i className={ icon }/> { title}
-                    
-                </h1>
-                <ul>
-                    <li>
-                        <Link to='/'>Home</Link>
-                    </li>
-                    <li>
-                        <Link to='/about'>About </Link>
-                    </li>
-                </ul>
-            </nav>
+
+            <nav className="navbar" role="navigation" aria-label="main navigation">
+  <div className="navbar-brand">
+    <a className="navbar-item" href="https://bulma.io">
+        <span className="title">GitHubHub</span>
+    </a>
+
+  </div>
+
+  <div id="navbarBasicExample" className="navbar-menu">
+    <div className="navbar-start">
+      <Link to='/' className="navbar-item   has-text-black">
+        Home
+      </Link>
+
+      <Link to='/about' className="navbar-item  has-text-black">
+        About
+      </Link>
+
+        </div>
+      </div>
+      <div className="navbar-end">
+      <div className="navbar-item">
+        <div className="buttons">
+          <a href="https://www.linkedin.com/in/jon-mester/" className="button is-primary">
+            <strong>Hire me while I'm available!</strong>
+          </a>
+          <a href="https://github.com/jonmest" className="button is-light">
+            Visit My GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+</nav>            
         )
 
 }

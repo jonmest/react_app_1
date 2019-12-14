@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 
 export const RepoItem = ({ repo }) => {
     return (
-        <div className="card">
-            <h3>
-                <a href={repo.html_url}>{repo.name}</a>
-            </h3>
-        </div>
+<div className="card">
+<div className="card-content">
+  <p className="title">
+  {repo.name}
+  </p>
+  <p className="subtitle">
+  {repo.description}
+  </p>
+  <a href={repo.html_url} target="_blank"> View on GitHub</a>
+
+</div>
+</div>
     )
 }
 

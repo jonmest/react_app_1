@@ -1,17 +1,18 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from '../layouts/Spinner';
-import PropTypes from 'prop-types';
 import Repos from '../repos/Repos';
+import GithubContext from '../../context/github/githubContext';
 
-const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
-    
+const User = ({ match }) => {
+    const githubContext = useContext(GithubContext);
     useEffect(() => {
         getUser(match.params.login);
         getUserRepos(match.params.login);
         // eslint-disable-next-line
     }, [])
 
+    const { getUser, loading, user, repos, getUserRepos } = githubContext;
 
  
         const {
@@ -48,22 +49,25 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
                 )}
                 <card className="card grid-2">
                     <div className="all-center">
-                        <img src={avatar_url} className="round-img" style={{width: '150px'}}/>
-                        <h1>
+                    <figure className="image is-128x128 box is-paddingless has-shadow">
+                    <img src={avatar_url}  className="has-shadow" style={{width: '128px'}}/>
+                    </figure>
+                        <h1 className="title">
                     { name }
                 </h1>
                 <p>
-                    Location: { location }
+                    <strong>Location:</strong> { location }
                 </p>
                     </div>
                     <div>
                         { bio && <Fragment>
-                            <h3>
-                                Bio</h3>
+                            <h3 className="subtitle">
+                               <strong>Bio</strong> </h3>
                         <p>
                             { bio }</p></Fragment>}
-                    <a href={html_url} className="btn btn-dark my-1">Visit GitHub Profile</a>
-                    
+                            <hr/>
+                    <a href={html_url} className="button is-dark">Visit GitHub Profile</a>
+                    <hr/>
                     <ul>
                         <li>
                             { login && <Fragment>
@@ -88,19 +92,21 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
                     </ul>
                     </div>
                 </card>
-                                <div classname="card text-center">
-                                    <badge className="badge badge-primary">
+                                <div className="card">
+                                <div className="tags">
+                                    <span className="tag is-primary">
                                         Followers: { followers }
-                                    </badge>
-                                    <badge className="badge badge-success">
+                                    </span>
+                                    <span className="tag is-success">
                                         Following: { following }
-                                    </badge>
-                                    <badge className="badge badge-danger">
+                                    </span>
+                                    <span className="tag is-danger">
                                         Public Repos: { public_repos }
-                                    </badge>
-                                    <badge className="badge badge-dark">
+                                    </span>
+                                    <span className="tag is-dark">
                                         Public Gists: { public_gists }
-                                    </badge>
+                                    </span>
+                                    </div>
                                 </div>
 
             <Repos repos={repos}>
@@ -111,12 +117,5 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match }) => {
 
 }
 
-User.propTypes = {
-    loading: PropTypes.bool,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired,  
-}
 
 export default User
